@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS Developer Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --background-light: #FFFFFF;
+            --surface-light: #F4F4F4;
+            --primary-color: #6200EE;
+            --secondary-color: #018786;
+            --text-primary: #000000;
+            --text-secondary: #4A4A4A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--surface-light);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding-top: 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+
+        .hero img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* About Me Section */
+        .about-me {
+            background-color: var(--surface-light);
+            padding: 80px 0;
+        }
+
+        .about-me h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .about-me p {
+            text-align: center;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+            background-color: var(--surface-light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-card {
+            background-color: var(--surface-light);
+            border: 1px solid var(--text-secondary);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background-color: var(--primary-color);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 20px;
+            margin-bottom: 30px;
+            background-color: var(--background-dark);
+            border-radius: 10px;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: auto;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -40px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -40px;
+        }
+
+        /*  project  */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: var(--background-dark);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .project-card-content {
+            padding: 20px;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--surface-light);
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--text-secondary);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: var(--background-light);
+            border: 1px solid var(--text-secondary);
+            color: var(--text-primary);
+            border-radius: 5px;
+        }
+
+        .contact-form button {
+            background-color: var(--primary-color);
+            color: var(--background-light);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #9768d9;
+        }
+
+        #contact {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--surface-light);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Ashokkumar N</div>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#about-me">About Me</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400" alt="Profile Picture">
+        <h1>iOS Developer</h1>
+        <p>Creating exceptional iOS applications with expertise in Swift, SwiftUI, and user-centered design.</p>
+        <div class="social-links">
+            <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://twitter.com/yourusername" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+    </section>
+
+    <section id="about-me" class="about-me">
+        <h2>About Me</h2>
+        <p>Hi! I'm an enthusiastic iOS Developer with a passion for crafting intuitive and engaging mobile applications. My journey in mobile development began with a love for elegant design and seamless user experiences. With expertise in Swift, UIKit, and SwiftUI, I strive to deliver solutions that stand out for their performance and innovation. Let's build something great together!</p>
+    </section>
+
+    <section id="skills" class="section container">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fab fa-swift"></i>
+                <h3>Swift Development</h3>
+                <p>Advanced Swift programming with modern language features and best practices.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>UIKit & SwiftUI</h3>
+                <p>Expert in creating responsive and adaptive user interfaces.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-database"></i>
+                <h3>Data Persistence</h3>
+                <p>CoreData, Realm, and other local storage solutions implementation.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-network-wired"></i>
+                <h3>API Integration</h3>
+                <p>Seamless RESTful and GraphQL API communication and data handling.</p>
+            </div>
+        </div>
+    </section>
+    <section id="experience" class="section container">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>iOS Developer</h3>
+                <p>Milespeak Technologies private limited.</p>
+                <p>February 2024 - Present</p>
+                <p>Collaborated on mobile app development, learned industry best practices and advanced Swift techniques.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section container">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects">
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400" alt="Task Management App">
+                <div class="project-card-content">
+                    <h3>Productivity Tracker</h3>
+                    <p>Advanced task management application with real-time collaboration features and comprehensive productivity insights.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1579952363873-27f3dfc2a6a0?w=400" alt="Weather App">
+                <div class="project-card-content">
+                    <h3>Weather Forecast App</h3>
+                    <p>Comprehensive weather application with detailed forecasts, interactive maps, and personalized weather alerts.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17a1e1?w=400" alt="Fitness Tracker">
+                <div class="project-card-content">
+                    <h3>Health Monitoring App</h3>
+                    <p>Integrated health tracking application leveraging HealthKit, providing comprehensive fitness and wellness insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">Contact Me</h2>
+        <p><i>Feel free to reach out to me via email at <strong>ashokkumarnallasamy@gmail.com</strong>.</i></p>
+    </section>
+
+    <footer>
+        <p>&copy; <i>2024 Ashokkumar Nallasamy. All Rights Reserved.</i></p>
+    </footer>
+</body>
+</html>
