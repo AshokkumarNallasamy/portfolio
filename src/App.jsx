@@ -26,7 +26,7 @@ const App = () => {
   const formRef = useRef();
 
   // Add email constant
-  const EMAIL = "ashokkumarnallasmay@gmail.com";
+  const EMAIL = "ashokkumarnallasamy@gmail.com";
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -729,15 +729,16 @@ const App = () => {
                   <FaApple className="text-6xl text-primary" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">iOS Task Manager</h3>
+                  <h3 className="text-xl font-bold mb-2">Wattawow</h3>
                   <p className="text-gray-300 mb-4">
-                    A modern task management app built with SwiftUI and Core Data.
-                    Features include real-time synchronization, widgets, and Siri shortcuts.
+                    A modern cycling app built with UIKit, SwiftUI and Core Data.
+                    Features include real-time synchronization, widgets.
+                    Includes API integrations, Maps.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">SwiftUI</span>
                     <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">Core Data</span>
-                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">WidgetKit</span>
+                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">Combine</span>
                   </div>
                 </div>
               </div>
@@ -796,19 +797,20 @@ const App = () => {
               whileHover={cardHoverAnimation.whileHover}
             >
               <div className="bg-dark/50 p-6 rounded-xl border border-gray-800">
-                <h3 className="text-xl font-bold mb-2">Mid-Level iOS Developer</h3>
-                <p className="text-primary mb-2">Tech Company • 2022 - Present</p>
+                <h3 className="text-xl font-bold mb-2">Junior iOS Developer</h3>
+                <p className="text-primary mb-2">Milespeak Technologies • 2024 - Present</p>
                 <ul className="list-disc list-inside text-gray-300 space-y-2">
                   <li>Developed and maintained multiple iOS applications using SwiftUI and UIKit</li>
                   <li>Implemented complex UI animations and transitions</li>
                   <li>Integrated REST APIs and third-party services</li>
                   <li>Collaborated with designers and backend developers</li>
-                  <li>Mentored junior developers and conducted code reviews</li>
+                  <li>Worked with Core Data and Realm for local storage</li>
+                  <li>Contributed to app store optimization</li>
                 </ul>
               </div>
             </motion.div>
 
-            {/* Experience 2 */}
+            {/* Experience 2
             <motion.div
               variants={letterAnimation}
               whileHover={cardHoverAnimation.whileHover}
@@ -824,7 +826,7 @@ const App = () => {
                   <li>Contributed to app store optimization</li>
                 </ul>
               </div>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
       </motion.section>
@@ -997,8 +999,8 @@ const App = () => {
         variants={staggerContainer}
       >
         <div className="container mx-auto px-6 text-center text-gray-400">
-          <p>© 2024 Ashokkumar. All rights reserved.</p>
-          <p className="mt-2">Designed and developed with ❤️ by Ashokkumar</p>
+          <p>© 2025 Ashokkumar. All rights reserved.</p>
+          <p className="mt-2">Designed and developed by Ashokkumar Nallasamy</p>
         </div>
       </motion.footer>
 
