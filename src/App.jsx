@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter, FaApple, FaSwift, FaDownload, FaMobile, FaLaptopCode, FaArrowUp } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaApple, FaSwift, FaDownload, FaMobile, FaLaptopCode, FaArrowUp, FaWhatsapp } from 'react-icons/fa';
 import { SiXcode, SiFirebase, SiSwift, SiAppstore } from 'react-icons/si';
 import { useInView } from 'react-intersection-observer';
 import emailjs from '@emailjs/browser';
@@ -874,7 +874,7 @@ const App = () => {
                   rotate: 5,
                   transition: { duration: 0.2 }
                 }}
-                href="https://github.com"
+                href="https://github.com/AshokkumarNallasamy"
                 className="text-2xl md:text-3xl text-gray-300 hover:text-primary"
               >
                 <FaGithub />
@@ -885,7 +885,7 @@ const App = () => {
                   rotate: 5,
                   transition: { duration: 0.2 }
                 }}
-                href="https://linkedin.com"
+                href="www.linkedin.com/in/ashokkumar01"
                 className="text-2xl md:text-3xl text-gray-300 hover:text-primary"
               >
                 <FaLinkedin />
@@ -896,10 +896,10 @@ const App = () => {
                   rotate: 5,
                   transition: { duration: 0.2 }
                 }}
-                href="https://twitter.com"
+                href={`https://wa.me/${9360436613}?text=${encodeURIComponent("Hey!\nAshokkumar Nallasamy.")}`}
                 className="text-2xl md:text-3xl text-gray-300 hover:text-primary"
               >
-                <FaTwitter />
+                <FaWhatsapp />
               </motion.a>
             </div>
 
