@@ -875,6 +875,8 @@ const App = () => {
                   transition: { duration: 0.2 }
                 }}
                 href="https://github.com/AshokkumarNallasamy"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-2xl md:text-3xl text-gray-300 hover:text-primary"
               >
                 <FaGithub />
@@ -885,7 +887,9 @@ const App = () => {
                   rotate: 5,
                   transition: { duration: 0.2 }
                 }}
-                href="www.linkedin.com/in/ashokkumar01"
+                href="https://www.linkedin.com/in/ashokkumar01"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-2xl md:text-3xl text-gray-300 hover:text-primary"
               >
                 <FaLinkedin />
@@ -897,11 +901,14 @@ const App = () => {
                   transition: { duration: 0.2 }
                 }}
                 href={`https://wa.me/${9360436613}?text=${encodeURIComponent("Hey!\nAshokkumar Nallasamy.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-2xl md:text-3xl text-gray-300 hover:text-primary"
               >
                 <FaWhatsapp />
               </motion.a>
             </div>
+
 
             {/* Contact form */}
             <motion.form 
