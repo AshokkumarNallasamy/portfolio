@@ -27,6 +27,8 @@ const App = () => {
 
   // Add email constant
   const EMAIL = "ashokkumarnallasamy@gmail.com";
+  const JUSRIDE_APP_STORE_LINK = "https://apps.apple.com/in/app/jus-ride/id6532623976";
+  const RESUME_LINK = "https://drive.google.com/uc?export=download&id=1a22uHG4u59KfnUHx8HZzQzzyQusPu-fe";
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -55,20 +57,84 @@ const App = () => {
     document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
   };
 
+  // const handleDownloadResume = () => {
+  //   // Replace with your actual resume file path
+  //   window.open(RESUME_LINK, '_blank');
+  // };
+
   const handleDownloadResume = () => {
-    // Replace with your actual resume file path
-    window.open('/resume.pdf', '_blank');
+    // For Google Drive links, we need to use the direct download URL
+    // and open in new tab for viewing
+    const fileId = '1a22uHG4u59KfnUHx8HZzQzzyQusPu-fe';
+    const viewLink = `https://drive.google.com/file/d/${fileId}/view`;
+    const downloadLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
+    
+    // Open for viewing in new tab
+    window.open(viewLink, '_blank');
+    
+    // Trigger download in background
+    setTimeout(() => {
+      window.open(downloadLink, '_blank');
+    }, 500);
   };
 
-  // Optimized animation variants for better performance
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
+  // New dynamic animation variants with spring physics
+  const slideInFromLeft = {
+    hidden: { opacity: 0, x: -100, rotate: -10 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      rotate: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+        duration: 0.6
+      }
+    }
+  };
+
+  const slideInFromRight = {
+    hidden: { opacity: 0, x: 100, rotate: 10 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      rotate: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+        duration: 0.6
+      }
+    }
+  };
+
+  const slideInFromBottom = {
+    hidden: { opacity: 0, y: 50, scale: 0.8 },
     visible: { 
       opacity: 1, 
       y: 0,
+      scale: 1,
       transition: {
-        duration: 0.4,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 120,
+        damping: 12,
+        duration: 0.7
+      }
+    }
+  };
+
+  const slideInFromTop = {
+    hidden: { opacity: 0, y: -50, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 14,
+        duration: 0.6
       }
     }
   };
@@ -78,49 +144,76 @@ const App = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.1
+        staggerChildren: 0.15,
+        delayChildren: 0.2
       }
     }
   };
 
   const letterAnimation = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30, rotateX: -90 },
     visible: {
       opacity: 1,
       y: 0,
+      rotateX: 0,
       transition: {
-        duration: 0.3,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 150,
+        damping: 12,
+        duration: 0.5
       }
     }
   };
 
   const scaleIn = {
-    hidden: { scale: 0.95, opacity: 0 },
+    hidden: { scale: 0, opacity: 0, rotate: -180 },
     visible: {
       scale: 1,
       opacity: 1,
+      rotate: 0,
       transition: {
-        duration: 0.3,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 200,
+        damping: 15,
+        duration: 0.8
       }
     }
   };
 
-  // Optimized hover animations
+  const bounceIn = {
+    hidden: { opacity: 0, scale: 0.3, y: -50 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 8,
+        duration: 0.8
+      }
+    }
+  };
+
+  // Enhanced hover animations - subtle and elegant
   const enhancedHoverAnimation = {
     whileHover: {
-      scale: 1.02,
+      scale: 1.05,
+      boxShadow: "0 8px 30px rgba(0, 122, 255, 0.3)",
       transition: {
-        duration: 0.2,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+        duration: 0.3
       }
     },
     whileTap: {
       scale: 0.98,
       transition: {
-        duration: 0.1
+        type: "spring",
+        stiffness: 400,
+        damping: 20,
+        duration: 0.2
       }
     }
   };
@@ -128,33 +221,59 @@ const App = () => {
   const cardHoverAnimation = {
     whileHover: {
       scale: 1.02,
-      boxShadow: "0 0 20px rgba(0, 122, 255, 0.15)",
+      y: -4,
+      boxShadow: "0 15px 40px rgba(0, 122, 255, 0.25)",
       transition: {
-        duration: 0.2,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 300,
+        damping: 25,
+        duration: 0.3
       }
     }
   };
 
-  // Optimized continuous animations
-  const floatingAnimation = {
+  // Subtle continuous animations - elegant and minimal
+  const subtleFloat = {
     animate: {
-      y: [0, -5, 0],
+      y: [0, -8, 0],
       transition: {
-        duration: 2,
+        duration: 4,
         repeat: Infinity,
         ease: "easeInOut"
       }
     }
   };
 
-  const rotateAnimation = {
+  const gentlePulse = {
+    animate: {
+      opacity: [0.3, 0.5, 0.3],
+      scale: [1, 1.02, 1],
+      transition: {
+        duration: 5,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const slowRotate = {
     animate: {
       rotate: [0, 360],
       transition: {
-        duration: 20,
+        duration: 30,
         repeat: Infinity,
         ease: "linear"
+      }
+    }
+  };
+
+  const shimmer = {
+    animate: {
+      opacity: [0.2, 0.4, 0.2],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
       }
     }
   };
@@ -214,9 +333,14 @@ const App = () => {
       {/* Navigation */}
       <motion.nav 
         className="fixed w-full bg-dark/90 backdrop-blur-md z-50 border-b border-gray-800"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.3, type: "spring", stiffness: 100 }}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 150, 
+          damping: 20,
+          duration: 0.6 
+        }}
       >
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
@@ -227,24 +351,46 @@ const App = () => {
                 e.preventDefault();
                 scrollToTop();
               }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, x: -50, rotate: -15 }}
+              animate={{ opacity: 1, x: 0, rotate: 0 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 200,
+                damping: 15,
+                duration: 0.5
+              }}
               className="flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
               <motion.div
-                animate={floatingAnimation.animate}
+                animate={subtleFloat.animate}
               >
                 <FaApple className="text-primary text-xl md:text-2xl" />
               </motion.div>
               <motion.span 
                 className="text-xl md:text-2xl font-bold text-primary"
-                animate={floatingAnimation.animate}
+                animate={subtleFloat.animate}
                 transition={{
-                  delay: 0.5 // This will make the name animation slightly out of sync with the apple icon
+                  delay: 0.5
                 }}
               >
                 Ashokkumar
+              </motion.span>
+              {/* Open to work badge */}
+              <motion.span
+                className="flex items-center gap-1 text-xs md:text-sm px-2 py-0.5 rounded-full 
+                          bg-green-500/10 text-green-400 border border-green-500/30"
+                // animate={{
+                //   scale: [1, 1.08, 1],
+                //   opacity: [0.8, 1, 0.8]
+                // }}
+                // transition={{
+                //   duration: 2,
+                //   repeat: Infinity,
+                //   ease: "easeInOut"
+                // }}
+              >
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                OPEN TO WORK
               </motion.span>
             </motion.a>
 
@@ -255,21 +401,35 @@ const App = () => {
               initial="hidden"
               animate="visible"
             >
-              {['About', 'Skills', 'Projects', 'Experience', 'Contact'].map((item) => (
+              {['About', 'Skills', 'Projects', 'Experience', 'Resume', 'Certifications', 'Education', 'Contact'].map((item, index) => (
                 <motion.a 
                   key={item}
                   href={`#${item.toLowerCase()}`}
                   className="hover:text-primary transition-colors relative text-sm"
                   variants={letterAnimation}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ 
+                    y: -3,
+                    scale: 1.05,
+                    transition: {
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20
+                    }
+                  }}
+                  whileTap={{ scale: 0.9, rotate: 0 }}
                 >
                   {item}
                   <motion.span
                     className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ scaleX: 0, originX: 0 }}
+                    whileHover={{ 
+                      scaleX: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 20
+                      }
+                    }}
                   />
                 </motion.a>
               ))}
@@ -279,22 +439,28 @@ const App = () => {
             <motion.button
               className="md:hidden relative w-8 h-8 flex items-center justify-center"
               whileHover={{ 
-                scale: 1.1,
-                rotate: 90,
-                transition: { duration: 0.3 }
+                scale: 1.2,
+                rotate: [0, -10, 10, 0],
+                transition: { 
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 10
+                }
               }}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.85 }}
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
               <motion.div 
                 className="relative w-5 h-4"
                 animate={{
-                  rotate: isMenuOpen ? 180 : 0
+                  rotate: isMenuOpen ? [0, 180, 180] : [180, 0, 0]
                 }}
                 transition={{
-                  duration: 0.3,
-                  ease: "easeInOut"
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  duration: 0.5
                 }}
               >
                 <motion.span 
@@ -338,25 +504,46 @@ const App = () => {
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
-                initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
+                initial={{ opacity: 0, y: -20, scale: 0.8, rotateX: -90 }}
+                animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                exit={{ opacity: 0, y: -20, scale: 0.8, rotateX: -90 }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20,
+                  duration: 0.4
+                }}
                 className="md:hidden absolute right-4 top-16 w-48 bg-dark/95 rounded-lg shadow-xl overflow-hidden border border-gray-800"
               >
                 <div className="flex flex-col py-2">
-                  {['About', 'Skills', 'Projects', 'Experience', 'Contact'].map((item, index) => (
+                  {['About', 'Skills', 'Projects', 'Experience', 'Resume', 'Certifications', 'Education', 'Contact'].map((item, index) => (
                     <React.Fragment key={item}>
                       <motion.a
                         href={`#${item.toLowerCase()}`}
                         className="px-4 py-2.5 text-gray-300 hover:text-primary hover:bg-primary/10 transition-colors text-sm"
-                        whileHover={{ x: 5 }}
-                        whileTap={{ scale: 0.98 }}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ 
+                          delay: index * 0.1,
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 15
+                        }}
+                whileHover={{ 
+                  x: 5,
+                  scale: 1.03,
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20
+                  }
+                }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {item}
                       </motion.a>
-                      {index < ['About', 'Skills', 'Projects', 'Experience', 'Contact'].length - 1 && (
+                      {index < ['About', 'Skills', 'Projects', 'Experience', 'Resume', 'Certifications', 'Education', 'Contact'].length - 1 && (
                         <div className="h-px bg-gray-800 mx-4" />
                       )}
                     </React.Fragment>
@@ -372,26 +559,29 @@ const App = () => {
       <AnimatePresence>
         {showScrollTop && (
           <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 50, scale: 0, rotate: -180 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, y: 50, scale: 0, rotate: 180 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 15
+            }}
             onClick={scrollToTop}
             className="fixed bottom-8 right-8 bg-dark/80 backdrop-blur-md border border-primary/30 text-primary p-4 rounded-full shadow-lg z-50 transition-all duration-300 hover:border-primary hover:bg-primary/10"
             whileHover={{ 
-              scale: 1.1,
-              boxShadow: "0 0 20px rgba(0, 122, 255, 0.2)"
+              scale: 1.15,
+              boxShadow: "0 0 25px rgba(0, 122, 255, 0.4)",
+              transition: {
+                type: "spring",
+                stiffness: 300,
+                damping: 20
+              }
             }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.9, rotate: 0 }}
           >
             <motion.div
-              animate={{
-                y: [0, -3, 0],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+              animate={subtleFloat.animate}
             >
               <FaArrowUp className="text-xl" />
             </motion.div>
@@ -419,35 +609,54 @@ const App = () => {
           }}
         />
 
-        {/* Floating icons */}
+        {/* Subtle decorative elements */}
         <motion.div
           className="absolute top-[10%] left-[5%] md:top-1/4 md:left-1/4"
-          animate={floatingAnimation.animate}
+          animate={subtleFloat.animate}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ 
+            duration: 1,
+            delay: 0.5
+          }}
         >
-          <SiSwift className="text-3xl md:text-5xl text-primary/30" />
+          <SiSwift className="text-3xl md:text-5xl text-primary/20" />
         </motion.div>
         <motion.div
           className="absolute bottom-[10%] right-[5%] md:bottom-1/4 md:right-1/4"
-          animate={floatingAnimation.animate}
-          transition={{ delay: 1 }}
+          animate={subtleFloat.animate}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ 
+            duration: 1,
+            delay: 0.8
+          }}
         >
-          <SiAppstore className="text-3xl md:text-5xl text-secondary/30" />
+          <SiAppstore className="text-3xl md:text-5xl text-secondary/20" />
         </motion.div>
         <motion.div
           className="absolute top-[20%] right-[5%] md:top-1/3 md:right-1/3"
-          animate={floatingAnimation.animate}
-          transition={{ delay: 2 }}
+          animate={gentlePulse.animate}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ 
+            duration: 1,
+            delay: 1.1
+          }}
         >
-          <FaMobile className="text-3xl md:text-5xl text-accent/30" />
+          <FaMobile className="text-3xl md:text-5xl text-accent/20" />
         </motion.div>
 
-        {/* Mouse follower - Optimized for mobile */}
+        {/* Subtle mouse follower - elegant glow */}
         <motion.div
           className="fixed pointer-events-none hidden md:block"
           style={{
-            width: '200px',
-            height: '200px',
-            background: "radial-gradient(circle, rgba(0,122,255,0.15) 0%, rgba(0,122,255,0) 70%)",
+            width: '300px',
+            height: '300px',
+            background: "radial-gradient(circle, rgba(0,122,255,0.08) 0%, rgba(0,122,255,0) 70%)",
             position: 'fixed',
             left: mousePosition.x,
             top: mousePosition.y,
@@ -457,11 +666,10 @@ const App = () => {
             mixBlendMode: 'screen',
           }}
           animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.3, 0.2],
+            opacity: [0.05, 0.12, 0.05],
           }}
           transition={{
-            duration: 2,
+            duration: 3,
             repeat: Infinity,
             ease: "easeInOut"
           }}
@@ -473,11 +681,11 @@ const App = () => {
           variants={staggerContainer}
         >
           <motion.div
-            variants={scaleIn}
+            variants={bounceIn}
             className="mb-6 md:mb-8"
           >
             <motion.div
-              animate={floatingAnimation.animate}
+              animate={subtleFloat.animate}
             >
               <FaApple className="text-5xl md:text-7xl text-primary mx-auto" />
             </motion.div>
@@ -485,22 +693,24 @@ const App = () => {
 
           <motion.h1 
             className="text-3xl md:text-6xl font-bold mb-4 md:mb-6"
-            variants={fadeInUp}
+            variants={slideInFromBottom}
           >
-            iOS Developer
+            Ashokkumar N
             <motion.span 
               className="block text-primary mt-2"
-              variants={fadeInUp}
+              variants={slideInFromBottom}
+              transition={{ delay: 0.2 }}
             >
-              Ashokkumar
+              iOS Developer
             </motion.span>
           </motion.h1>
 
           <motion.p 
-            className="text-base md:text-xl mb-6 md:mb-8 text-gray-300"
-            variants={fadeInUp}
+            className="text-base md:text-xl mb-6 md:mb-8 text-gray-300 max-w-3xl mx-auto"
+            variants={slideInFromTop}
+            transition={{ delay: 0.3 }}
           >
-            Mid-Level iOS Developer | Swift & SwiftUI Expert | UIKit Specialist
+            Results-driven iOS Developer with 2+ years building scalable, high-performance apps using Swift, SwiftUI, UIKit, Combine, CoreData, REST APIs, and MVVM architecture. Proven track record of delivering App Store releases, improving stability, and collaborating across teams.
           </motion.p>
 
           {/* Skill tags */}
@@ -508,15 +718,21 @@ const App = () => {
             className="flex flex-wrap justify-center gap-3 mb-6 md:mb-8"
             variants={staggerContainer}
           >
-            {['SwiftUI', 'UIKit', 'Core Data', 'Swift'].map((skill, index) => (
+            {['Swift', 'SwiftUI', 'UIKit', 'Combine', 'CoreData', 'MVVM'].map((skill, index) => (
               <motion.span
                 key={skill}
                 className="px-3 py-1.5 bg-primary/10 rounded-full text-primary text-sm"
                 variants={letterAnimation}
-                whileHover={{
-                  scale: 1.05,
-                  backgroundColor: "rgba(0, 122, 255, 0.2)"
-                }}
+                  whileHover={{
+                    scale: 1.08,
+                    backgroundColor: "rgba(0, 122, 255, 0.25)",
+                    boxShadow: "0 4px 15px rgba(0, 122, 255, 0.3)",
+                    transition: {
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20
+                    }
+                  }}
                 transition={{ delay: 0.1 * index }}
               >
                 {skill}
@@ -532,16 +748,11 @@ const App = () => {
               {...enhancedHoverAnimation}
               className="bg-primary hover:bg-secondary text-white px-6 py-2.5 md:px-8 md:py-3 rounded-full text-base md:text-lg font-semibold transition-colors flex items-center justify-center gap-2"
               onClick={handleViewProjects}
+              variants={slideInFromLeft}
             >
               <motion.div
-                animate={{
-                  y: [0, -3, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
+                animate={subtleFloat.animate}
+                transition={{ delay: 0.5 }}
               >
                 <FaLaptopCode />
               </motion.div>
@@ -551,16 +762,11 @@ const App = () => {
               {...enhancedHoverAnimation}
               className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 px-6 py-2.5 md:px-8 md:py-3 rounded-full text-base md:text-lg font-semibold transition-colors flex items-center justify-center gap-2"
               onClick={handleDownloadResume}
+              variants={slideInFromRight}
             >
               <motion.div
-                animate={{
-                  y: [0, 3, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
+                animate={subtleFloat.animate}
+                transition={{ delay: 1 }}
               >
                 <FaDownload />
               </motion.div>
@@ -587,30 +793,23 @@ const App = () => {
           >
             <motion.h2 
               className={`${mobileStyles.heading} font-bold mb-8 text-center`}
-              variants={letterAnimation}
+              variants={bounceIn}
             >
               About Me
             </motion.h2>
             <motion.div 
               className="space-y-6 text-lg text-gray-300 leading-relaxed"
-              variants={letterAnimation}
+              variants={staggerContainer}
             >
-              <p>
-                I'm a passionate iOS developer with expertise in both SwiftUI and UIKit frameworks.
-                With a strong foundation in iOS development, I create elegant and performant applications
-                that follow Apple's Human Interface Guidelines.
-              </p>
-              <p>
-                My journey in iOS development started with UIKit, and I've since mastered SwiftUI,
-                allowing me to build modern, responsive interfaces while maintaining backward compatibility
-                when needed. I'm particularly skilled in creating smooth animations, implementing
-                complex UI interactions, and optimizing app performance.
-              </p>
-              <p>
-                I believe in writing clean, maintainable code and following SOLID principles.
-                My experience includes working with various iOS frameworks, third-party libraries,
-                and implementing best practices for app architecture and design patterns.
-              </p>
+              <motion.p variants={slideInFromLeft}>
+                Results-driven iOS Developer with hands-on experience shipping scalable, high-performance apps to the App Store. I specialize in Swift, SwiftUI, UIKit, Combine, CoreData, REST APIs, and MVVM architecture.
+              </motion.p>
+              <motion.p variants={slideInFromRight}>
+                I focus on maintainable, testable code, collaborating closely with designers, backend teams, and QA to deliver polished releases. I care about smooth animations, reliable offline experiences, and crash-free performance.
+              </motion.p>
+              <motion.p variants={slideInFromLeft}>
+                Comfortable leading end-to-end delivery: integrating APIs, refining UI polish, optimizing performance, and handling deployment, certificates, and provisioning for App Store submissions and TestFlight builds.
+              </motion.p>
             </motion.div>
           </motion.div>
         </div>
@@ -628,7 +827,7 @@ const App = () => {
         <div className="container mx-auto px-6">
           <motion.h2 
             className="text-4xl font-bold mb-12 text-center"
-            variants={letterAnimation}
+            variants={bounceIn}
           >
             Technical Skills
           </motion.h2>
@@ -638,7 +837,7 @@ const App = () => {
           >
             {/* iOS Development */}
             <motion.div 
-              variants={letterAnimation}
+              variants={slideInFromLeft}
               whileHover={cardHoverAnimation.whileHover}
             >
               <div className="bg-dark/50 rounded-xl p-6 border border-gray-800">
@@ -647,51 +846,71 @@ const App = () => {
                   <h3 className="text-xl font-bold">iOS Development</h3>
                 </div>
                 <ul className="space-y-2 text-gray-300">
-                  <li>• Swift & SwiftUI</li>
-                  <li>• UIKit & Auto Layout</li>
-                  <li>• Core Data & Realm</li>
-                  <li>• Core Animation</li>
-                  <li>• Push Notifications</li>
+                  <li>• Swift, SwiftUI, UIKit, Combine</li>
+                  <li>• CoreData, offline caching, persistence</li>
+                  <li>• SwiftUI + UIKit hybrids with MVVM</li>
+                  <li>• Smooth animations & transitions</li>
+                  <li>• Async/await networking & background tasks</li>
                 </ul>
               </div>
             </motion.div>
 
             {/* Tools & Technologies */}
             <motion.div 
-              variants={letterAnimation}
+              variants={slideInFromBottom}
               whileHover={cardHoverAnimation.whileHover}
             >
               <div className="bg-dark/50 rounded-xl p-6 border border-gray-800">
                 <div className="flex items-center gap-3 mb-4">
                   <SiXcode className="text-2xl text-primary" />
-                  <h3 className="text-xl font-bold">Tools & Technologies</h3>
+                  <h3 className="text-xl font-bold">Tools & Delivery</h3>
                 </div>
                 <ul className="space-y-2 text-gray-300">
-                  <li>• Xcode & Instruments</li>
-                  <li>• Git & GitHub</li>
-                  <li>• CocoaPods & SPM</li>
-                  <li>• Firebase & CloudKit</li>
-                  <li>• TestFlight & App Store</li>
+                  <li>• Xcode, Instruments, Fastlane</li>
+                  <li>• Git, GitHub, CI/CD hygiene</li>
+                  <li>• CocoaPods, Swift Package Manager</li>
+                  <li>• App Store Connect, TestFlight, certificates</li>
+                  <li>• Crash monitoring & analytics</li>
                 </ul>
               </div>
             </motion.div>
 
             {/* Architecture & Design */}
             <motion.div 
-              variants={letterAnimation}
+              variants={slideInFromRight}
               whileHover={cardHoverAnimation.whileHover}
             >
               <div className="bg-dark/50 rounded-xl p-6 border border-gray-800">
                 <div className="flex items-center gap-3 mb-4">
                   <FaSwift className="text-2xl text-primary" />
-                  <h3 className="text-xl font-bold">Architecture & Design</h3>
+                  <h3 className="text-xl font-bold">Architecture & Quality</h3>
                 </div>
                 <ul className="space-y-2 text-gray-300">
-                  <li>• MVVM & Clean Architecture</li>
-                  <li>• Protocol-Oriented Programming</li>
-                  <li>• Combine Framework</li>
-                  <li>• Unit & UI Testing</li>
-                  <li>• CI/CD Implementation</li>
+                  <li>• MVVM, Clean Architecture, SOLID</li>
+                  <li>• Protocol-oriented design, modularization</li>
+                  <li>• REST & GraphQL API integration</li>
+                  <li>• XCTests, XCUITests, performance profiling</li>
+                  <li>• Accessibility & user-centric UI polish</li>
+                </ul>
+              </div>
+            </motion.div>
+
+            {/* Backend & Collaboration */}
+            <motion.div 
+              variants={slideInFromBottom}
+              whileHover={cardHoverAnimation.whileHover}
+            >
+              <div className="bg-dark/50 rounded-xl p-6 border border-gray-800">
+                <div className="flex items-center gap-3 mb-4">
+                  <SiFirebase className="text-2xl text-primary" />
+                  <h3 className="text-xl font-bold">APIs & Collaboration</h3>
+                </div>
+                <ul className="space-y-2 text-gray-300">
+                  <li>• REST/GraphQL with Alamofire & URLSession</li>
+                  <li>• Firebase, notifications, crash reporting</li>
+                  <li>• Async/await data flows & Combine</li>
+                  <li>• Agile delivery, cross-functional teamwork</li>
+                  <li>• AI tools: GitHub Copilot, ChatGPT/Claude</li>
                 </ul>
               </div>
             </motion.div>
@@ -711,7 +930,7 @@ const App = () => {
         <div className="container mx-auto px-6">
           <motion.h2 
             className="text-4xl font-bold mb-12 text-center"
-            variants={letterAnimation}
+            variants={bounceIn}
           >
             Featured Projects
           </motion.h2>
@@ -721,24 +940,31 @@ const App = () => {
           >
             {/* Project 1 */}
             <motion.div 
-              variants={letterAnimation}
+              variants={slideInFromLeft}
               whileHover={cardHoverAnimation.whileHover}
+              onClick={() => window.open(JUSRIDE_APP_STORE_LINK, '_blank')}
+              className="cursor-pointer"
             >
               <div className="bg-dark/50 rounded-xl overflow-hidden border border-gray-800">
                 <div className="h-48 bg-primary/20 flex items-center justify-center">
                   <FaApple className="text-6xl text-primary" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">Wattawow</h3>
+                  <h3 className="text-xl font-bold mb-2">JusRide – Social Cycling & Bicycle Service</h3>
                   <p className="text-gray-300 mb-4">
-                    A modern cycling app built with UIKit, SwiftUI and Core Data.
-                    Features include real-time synchronization, widgets.
-                    Includes API integrations, Maps.
+                    Built a social platform for cyclists to connect, interact, and book services using a hybrid SwiftUI + UIKit approach with MVVM.
                   </p>
+                  <ul className="list-disc list-inside text-gray-300 space-y-1 mb-4">
+                    <li>Integrated Alamofire + Combine for reactive API handling</li>
+                    <li>Added OLA Maps SDK for navigation and nearby service discovery</li>
+                    <li>Implemented CoreData offline caching for uninterrupted UX</li>
+                    <li>Shipped smooth animations and interactive UI using SwiftUI</li>
+                  </ul>
                   <div className="flex flex-wrap gap-2">
                     <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">SwiftUI</span>
-                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">Core Data</span>
+                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">UIKit</span>
                     <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">Combine</span>
+                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">CoreData</span>
                   </div>
                 </div>
               </div>
@@ -746,7 +972,7 @@ const App = () => {
 
             {/* Project 2 */}
             <motion.div 
-              variants={letterAnimation}
+              variants={slideInFromRight}
               whileHover={cardHoverAnimation.whileHover}
             >
               <div className="bg-dark/50 rounded-xl overflow-hidden border border-gray-800">
@@ -754,15 +980,21 @@ const App = () => {
                   <SiFirebase className="text-6xl text-secondary" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">Social Media App</h3>
+                  <h3 className="text-xl font-bold mb-2">Employee Management App (Internal)</h3>
                   <p className="text-gray-300 mb-4">
-                    A social networking platform with real-time chat, photo sharing,
-                    and push notifications using Firebase.
+                    Delivered an internal enterprise iOS app built entirely with SwiftUI and MVVM, focused on reliability and productivity.
                   </p>
+                  <ul className="list-disc list-inside text-gray-300 space-y-1 mb-4">
+                    <li>Implemented leave requests, approvals, attendance, and timesheets</li>
+                    <li>Added internal chat/collaboration features with async/await APIs</li>
+                    <li>Integrated backend services with secure REST endpoints</li>
+                    <li>Optimized UI polish, performance, and crash-free reliability</li>
+                  </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">UIKit</span>
-                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">Firebase</span>
-                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">WebSocket</span>
+                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">SwiftUI</span>
+                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">MVVM</span>
+                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">Async/Await</span>
+                    <span className="px-3 py-1 bg-primary/20 rounded-full text-sm">REST</span>
                   </div>
                 </div>
               </div>
@@ -783,7 +1015,7 @@ const App = () => {
         <div className="container mx-auto px-6">
           <motion.h2 
             className="text-4xl font-bold mb-12 text-center"
-            variants={letterAnimation}
+            variants={bounceIn}
           >
             Work Experience
           </motion.h2>
@@ -793,19 +1025,21 @@ const App = () => {
           >
             {/* Experience 1 */}
             <motion.div
-              variants={letterAnimation}
+              variants={slideInFromBottom}
               whileHover={cardHoverAnimation.whileHover}
             >
               <div className="bg-dark/50 p-6 rounded-xl border border-gray-800">
-                <h3 className="text-xl font-bold mb-2">Junior iOS Developer</h3>
-                <p className="text-primary mb-2">Milespeak Technologies • 2024 - Present</p>
+                <h3 className="text-xl font-bold mb-2">iOS Developer</h3>
+                <p className="text-primary mb-2">Milespeak Technologies Pvt Ltd, Chennai • Feb 2024 – Present</p>
                 <ul className="list-disc list-inside text-gray-300 space-y-2">
-                  <li>Developed and maintained multiple iOS applications using SwiftUI and UIKit</li>
-                  <li>Implemented complex UI animations and transitions</li>
-                  <li>Integrated REST APIs and third-party services</li>
-                  <li>Collaborated with designers and backend developers</li>
-                  <li>Worked with Core Data and Realm for local storage</li>
-                  <li>Contributed to app store optimization</li>
+                  <li>Built and maintained scalable enterprise iOS apps with Swift, SwiftUI, UIKit, and Combine</li>
+                  <li>Developed feature-rich social, booking, and enterprise apps following MVVM architecture</li>
+                  <li>Integrated REST APIs using Alamofire + Combine and async/await, improving reliability</li>
+                  <li>Implemented reusable UI components, smooth animations, and CoreData offline persistence</li>
+                  <li>Refactored legacy code for maintainability, readability, and performance</li>
+                  <li>Led app deployments via App Store Connect, TestFlight, certificates, and provisioning</li>
+                  <li>Authored XCTests/XCUITests, monitored crashes, and optimized stability pre-release</li>
+                  <li>Partnered with designers, backend engineers, and QA for polished, on-time releases</li>
                 </ul>
               </div>
             </motion.div>
@@ -831,6 +1065,135 @@ const App = () => {
         </div>
       </motion.section>
 
+      {/* Resume Download Section */}
+      <motion.section 
+        id="resume" 
+        className="py-20 bg-dark/50"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainer}
+      >
+        <div className="container mx-auto px-6">
+          <motion.div 
+            className="max-w-2xl mx-auto text-center"
+            variants={staggerContainer}
+          >
+            <motion.h2 
+              className="text-4xl font-bold mb-4"
+              variants={slideInFromBottom}
+            >
+              Resume
+            </motion.h2>
+            <motion.p 
+              className="text-gray-300 mb-8 text-lg"
+              variants={slideInFromBottom}
+              transition={{ delay: 0.1 }}
+            >
+              Download my resume to learn more about my experience and skills
+            </motion.p>
+            <motion.div variants={slideInFromBottom} transition={{ delay: 0.2 }}>
+              <motion.button
+                {...enhancedHoverAnimation}
+                className="bg-primary hover:bg-secondary text-white px-10 py-4 rounded-full text-lg font-semibold transition-colors flex items-center justify-center gap-3 mx-auto shadow-lg"
+                onClick={handleDownloadResume}
+              >
+                <FaDownload className="text-xl" />
+                Download Resume PDF
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Certifications Section */}
+      <motion.section 
+        id="certifications" 
+        className="py-20"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainer}
+      >
+        <div className="container mx-auto px-6">
+          <motion.h2 
+            className="text-4xl font-bold mb-12 text-center"
+            variants={bounceIn}
+          >
+            Certifications
+          </motion.h2>
+          <motion.div 
+            className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6"
+            variants={staggerContainer}
+          >
+            <motion.div 
+              className="bg-dark/50 p-6 rounded-xl border border-gray-800"
+              variants={slideInFromLeft}
+              whileHover={cardHoverAnimation.whileHover}
+            >
+              <h3 className="text-xl font-bold text-primary mb-2">Java FullStack Development</h3>
+              <p className="text-gray-300">QSpiders • 2023</p>
+            </motion.div>
+            <motion.div 
+              className="bg-dark/50 p-6 rounded-xl border border-gray-800"
+              variants={slideInFromRight}
+              whileHover={cardHoverAnimation.whileHover}
+            >
+              <h3 className="text-xl font-bold text-primary mb-2">iOS App Development with Swift</h3>
+              <p className="text-gray-300">Udemy • 2024</p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Education Section */}
+      <motion.section 
+        id="education" 
+        className="py-20 bg-dark/50"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainer}
+      >
+        <div className="container mx-auto px-6">
+          <motion.h2 
+            className="text-4xl font-bold mb-12 text-center"
+            variants={bounceIn}
+          >
+            Education
+          </motion.h2>
+          <motion.div 
+            className="max-w-3xl mx-auto space-y-6"
+            variants={staggerContainer}
+          >
+            <motion.div 
+              className="bg-dark/50 p-6 rounded-xl border border-gray-800 flex flex-col md:flex-row md:items-center md:justify-between"
+              variants={slideInFromLeft}
+              whileHover={cardHoverAnimation.whileHover}
+            >
+              <div>
+                <h3 className="text-xl font-bold">B.Sc. Mathematics</h3>
+                <p className="text-gray-300">Gandhigram Rural Institute, Dindigul</p>
+                <p className="text-gray-400 mt-1">CGPA: 7.1 / 10</p>
+              </div>
+              <p className="text-primary mt-3 md:mt-0">Aug 2020 – May 2023</p>
+            </motion.div>
+            <motion.div 
+              className="bg-dark/50 p-6 rounded-xl border border-gray-800 flex flex-col md:flex-row md:items-center md:justify-between"
+              variants={slideInFromRight}
+              whileHover={cardHoverAnimation.whileHover}
+            >
+              <div>
+                <h3 className="text-xl font-bold">HSC</h3>
+                <p className="text-gray-300">Akshaya Academy Hr. Sec School, Dindigul</p>
+                <p className="text-gray-400 mt-1">Percentage: 85%</p>
+              </div>
+              <p className="text-primary mt-3 md:mt-0">Jun 2019 – Mar 2020</p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
+
       {/* Contact Section with enhanced scroll animation */}
       <motion.section 
         id="contact" 
@@ -843,7 +1206,7 @@ const App = () => {
         <div className={`container mx-auto ${mobileStyles.container}`}>
           <motion.h2 
             className={`${mobileStyles.heading} font-bold mb-8 text-center`}
-            variants={letterAnimation}
+            variants={bounceIn}
           >
             Get In Touch
           </motion.h2>
@@ -854,25 +1217,51 @@ const App = () => {
             {/* Email display */}
             <motion.div 
               className="text-center mb-8"
-              variants={letterAnimation}
+              variants={slideInFromTop}
             >
               <motion.a
                 href={`mailto:${EMAIL}`}
                 className="text-lg md:text-xl text-primary hover:text-secondary transition-colors"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ 
+                  scale: 1.08,
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20
+                  }
+                }}
                 whileTap={{ scale: 0.95 }}
               >
                 {EMAIL}
               </motion.a>
+              <div className="mt-3 text-gray-400 flex flex-col md:flex-row items-center justify-center gap-2">
+                <span>📍 Chennai, India</span>
+                <span className="hidden md:inline">•</span>
+                <a href="tel:+919360436613" className="hover:text-primary">+91-9360436613</a>
+              </div>
             </motion.div>
 
             {/* Social icons */}
             <div className="flex justify-center space-x-8 mb-8 md:mb-12">
               <motion.a
+                initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.1
+                }}
                 whileHover={{ 
-                  scale: 1.2,
-                  rotate: 5,
-                  transition: { duration: 0.2 }
+                  scale: 1.3,
+                  rotate: [0, -15, 15, -15, 0],
+                  y: -5,
+                  transition: { 
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 10
+                  }
                 }}
                 href="https://github.com/AshokkumarNallasamy"
                 target="_blank"
@@ -882,10 +1271,24 @@ const App = () => {
                 <FaGithub />
               </motion.a>
               <motion.a
+                initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.2
+                }}
                 whileHover={{ 
-                  scale: 1.2,
-                  rotate: 5,
-                  transition: { duration: 0.2 }
+                  scale: 1.3,
+                  rotate: [0, -15, 15, -15, 0],
+                  y: -5,
+                  transition: { 
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 10
+                  }
                 }}
                 href="https://www.linkedin.com/in/ashokkumar01"
                 target="_blank"
@@ -895,10 +1298,24 @@ const App = () => {
                 <FaLinkedin />
               </motion.a>
               <motion.a
+                initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.3
+                }}
                 whileHover={{ 
-                  scale: 1.2,
-                  rotate: 5,
-                  transition: { duration: 0.2 }
+                  scale: 1.3,
+                  rotate: [0, -15, 15, -15, 0],
+                  y: -5,
+                  transition: { 
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 10
+                  }
                 }}
                 href={`https://wa.me/${9360436613}?text=${encodeURIComponent("Hey!\nAshokkumar Nallasamy.")}`}
                 target="_blank"
@@ -917,7 +1334,7 @@ const App = () => {
               className={`${mobileStyles.form} space-y-4 md:space-y-6 backdrop-blur-sm`}
               variants={staggerContainer}
             >
-              <motion.div variants={letterAnimation}>
+              <motion.div variants={slideInFromLeft}>
                 <motion.input
                   type="text"
                   name="name"
@@ -926,14 +1343,19 @@ const App = () => {
                   placeholder="Your Name"
                   required
                   whileFocus={{ 
-                    scale: 1.01,
-                    boxShadow: "0 0 15px rgba(0, 122, 255, 0.15)",
-                    transition: { duration: 0.2 }
+                    scale: 1.03,
+                    rotateX: 5,
+                    boxShadow: "0 0 25px rgba(0, 122, 255, 0.3)",
+                    transition: { 
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20
+                    }
                   }}
                   className="w-full px-4 py-3 rounded-lg bg-dark/50 border border-gray-800 focus:border-primary focus:outline-none text-base md:text-lg text-white placeholder-gray-400"
                 />
               </motion.div>
-              <motion.div variants={letterAnimation}>
+              <motion.div variants={slideInFromRight}>
                 <motion.input
                   type="email"
                   name="email"
@@ -942,14 +1364,19 @@ const App = () => {
                   placeholder="Your Email"
                   required
                   whileFocus={{ 
-                    scale: 1.01,
-                    boxShadow: "0 0 15px rgba(0, 122, 255, 0.15)",
-                    transition: { duration: 0.2 }
+                    scale: 1.03,
+                    rotateX: 5,
+                    boxShadow: "0 0 25px rgba(0, 122, 255, 0.3)",
+                    transition: { 
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20
+                    }
                   }}
                   className="w-full px-4 py-3 rounded-lg bg-dark/50 border border-gray-800 focus:border-primary focus:outline-none text-base md:text-lg text-white placeholder-gray-400"
                 />
               </motion.div>
-              <motion.div variants={letterAnimation}>
+              <motion.div variants={slideInFromLeft}>
                 <motion.textarea
                   name="message"
                   value={formData.message}
@@ -958,9 +1385,14 @@ const App = () => {
                   required
                   rows="4"
                   whileFocus={{ 
-                    scale: 1.01,
-                    boxShadow: "0 0 15px rgba(0, 122, 255, 0.15)",
-                    transition: { duration: 0.2 }
+                    scale: 1.03,
+                    rotateX: 5,
+                    boxShadow: "0 0 25px rgba(0, 122, 255, 0.3)",
+                    transition: { 
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20
+                    }
                   }}
                   className="w-full px-4 py-3 rounded-lg bg-dark/50 border border-gray-800 focus:border-primary focus:outline-none text-base md:text-lg text-white placeholder-gray-400 resize-none"
                 />
@@ -986,8 +1418,17 @@ const App = () => {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
+                variants={slideInFromBottom}
+                whileHover={{ 
+                  scale: 1.03,
+                  boxShadow: "0 8px 25px rgba(0, 122, 255, 0.3)",
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20
+                  }
+                }}
+                whileTap={{ scale: 0.95 }}
                 className="w-full bg-primary hover:bg-secondary text-white px-6 py-3 rounded-lg text-base md:text-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
@@ -1006,8 +1447,16 @@ const App = () => {
         variants={staggerContainer}
       >
         <div className="container mx-auto px-6 text-center text-gray-400">
-          <p>© 2025 Ashokkumar. All rights reserved.</p>
-          <p className="mt-2">Designed and developed by Ashokkumar Nallasamy</p>
+          <motion.p variants={slideInFromBottom}>
+            © 2025 Ashokkumar. All rights reserved.
+          </motion.p>
+          <motion.p 
+            className="mt-2"
+            variants={slideInFromBottom}
+            transition={{ delay: 0.1 }}
+          >
+            Designed and developed by Ashokkumar Nallasamy
+          </motion.p>
         </div>
       </motion.footer>
 
@@ -1025,16 +1474,19 @@ const App = () => {
         className="fixed inset-0 bg-gradient-to-br from-dark to-gray-900"
         animate={{
           background: [
-            "linear-gradient(to bottom right, #1C1C1E, #2C2C2E)",
-            "linear-gradient(to bottom right, #1C1C1E, #3C3C3E)",
-            "linear-gradient(to bottom right, #1C1C1E, #2C2C2E)"
-          ]
+            "linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 50%, #1C1C1E 100%)",
+            "linear-gradient(225deg, #1C1C1E 0%, #3C3C3E 50%, #2C2C2E 100%)",
+            "linear-gradient(315deg, #2C2C2E 0%, #1C1C1E 50%, #3C3C3E 100%)",
+            "linear-gradient(45deg, #3C3C3E 0%, #2C2C2E 50%, #1C1C1E 100%)",
+            "linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 50%, #1C1C1E 100%)"
+          ],
+          scale: [1, 1.05, 1.1, 1.05, 1]
         }}
         transition={{
-          duration: 15,
+          duration: 20,
           repeat: Infinity,
           ease: "easeInOut",
-          repeatType: "reverse"
+          repeatType: "loop"
         }}
         style={{ zIndex: -1 }}
       />
