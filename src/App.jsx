@@ -315,17 +315,17 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark to-gray-900 text-light">
+    <div className="min-h-screen bg-gradient-to-br from-dark to-gray-900 text-light overflow-x-hidden">
       {/* Navigation */}
       <motion.nav 
-        className="fixed w-full bg-dark/90 backdrop-blur-md z-50 border-b border-gray-800"
+        className="fixed w-full max-w-[100vw] bg-dark/90 backdrop-blur-md z-50 border-b border-gray-800"
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            {/* Logo and Name */}
+        <div className="w-full max-w-[100vw] mx-auto px-3 sm:px-4 py-2.5 sm:py-3 box-border relative overflow-x-hidden">
+          <div className="flex items-center justify-between gap-2 min-w-0">
+            {/* Logo and Name – compact on mobile */}
             <motion.a
               href="#"
               onClick={(e) => {
@@ -335,44 +335,29 @@ const App = () => {
               initial={{ opacity: 0, x: -32 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-shrink hover:opacity-80 transition-opacity"
             >
-              <motion.div
-                // animate={subtleFloat.animate}
-              >
-                <FaApple className="text-primary text-xl md:text-2xl" />
+              <motion.div className="flex-shrink-0">
+                <FaApple className="text-primary text-lg sm:text-xl md:text-2xl" />
               </motion.div>
               <motion.span 
-                className="text-xl md:text-2xl font-bold text-primary"
-                // animate={subtleFloat.animate}
-                // transition={{
-                //   delay: 0.5
-                // }}
+                className="text-base sm:text-xl md:text-2xl font-bold text-primary truncate"
               >
                 Ashokkumar
               </motion.span>
-              {/* Open to work badge */}
+              {/* Open to work badge – shorter on mobile */}
               <motion.span
-                className="flex items-center gap-1 text-xs md:text-sm px-2 py-0.5 rounded-full 
-                          bg-green-500/10 text-green-400 border border-green-500/30"
-                // animate={{
-                //   scale: [1, 1.08, 1],
-                //   opacity: [0.8, 1, 0.8]
-                // }}
-                // transition={{
-                //   duration: 2,
-                //   repeat: Infinity,
-                //   ease: "easeInOut"
-                // }}
+                className="flex items-center gap-1 flex-shrink-0 text-[10px] sm:text-xs md:text-sm px-1.5 sm:px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/30 whitespace-nowrap"
               >
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                OPEN TO WORK
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full animate-pulse flex-shrink-0" />
+                <span className="sm:hidden">Open</span>
+                <span className="hidden sm:inline">OPEN TO WORK</span>
               </motion.span>
             </motion.a>
 
             {/* Desktop Navigation */}
             <motion.div 
-              className="hidden md:flex items-center space-x-8"
+              className="hidden md:flex items-center space-x-6 lg:space-x-8 flex-shrink-0 text-gray-200"
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
@@ -381,7 +366,7 @@ const App = () => {
                 <motion.a 
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  className="hover:text-primary transition-colors relative text-sm"
+                  className="text-gray-200 hover:text-primary transition-colors relative text-sm whitespace-nowrap"
                   variants={letterAnimation}
                   whileHover={{ y: -2, transition: { duration: 0.2, ease: "easeOut" } }}
                   whileTap={{ scale: 0.98 }}
@@ -445,42 +430,41 @@ const App = () => {
               </motion.div>
             </motion.button>
           </div>
-
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -16, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -16, scale: 0.96 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="md:hidden absolute right-4 top-16 w-48 bg-dark/95 rounded-lg shadow-xl overflow-hidden border border-gray-800"
-              >
-                <div className="flex flex-col py-2">
-                  {['About', 'Skills', 'Projects', 'Experience', 'Resume', 'Certifications', 'Education', 'Contact'].map((item, index) => (
-                    <React.Fragment key={item}>
-                      <motion.a
-                        href={`#${item.toLowerCase()}`}
-                        className="px-4 py-2.5 text-gray-300 hover:text-primary hover:bg-primary/10 transition-colors text-sm"
-                        initial={{ opacity: 0, x: -12 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05, duration: 0.25, ease: "easeOut" }}
-                        whileHover={{ x: 4 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {item}
-                      </motion.a>
-                      {index < ['About', 'Skills', 'Projects', 'Experience', 'Resume', 'Certifications', 'Education', 'Contact'].length - 1 && (
-                        <div className="h-px bg-gray-800 mx-4" />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
+
+        {/* Mobile Menu – direct child of nav so it sits below the bar */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="md:hidden absolute right-3 top-full mt-1 w-max min-w-40 max-w-[calc(100vw-1.5rem)] bg-dark border border-gray-700 rounded-lg shadow-xl py-2 z-[60]"
+            >
+              <div className="flex flex-col">
+                {['About', 'Skills', 'Projects', 'Experience', 'Resume', 'Certifications', 'Education', 'Contact'].map((item, index) => (
+                  <React.Fragment key={item}>
+                    <motion.a
+                      href={`#${item.toLowerCase()}`}
+                      className="px-4 py-2.5 text-gray-200 hover:text-primary hover:bg-primary/10 transition-colors text-sm block"
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.04, duration: 0.2, ease: "easeOut" }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item}
+                    </motion.a>
+                    {index < ['About', 'Skills', 'Projects', 'Experience', 'Resume', 'Certifications', 'Education', 'Contact'].length - 1 && (
+                      <div className="h-px bg-gray-800 mx-4" />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.nav>
 
       {/* Scroll to Top Button */}
