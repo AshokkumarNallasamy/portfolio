@@ -505,11 +505,12 @@ const App = () => {
         )}
       </AnimatePresence>
 
-      {/* Hero Section – home page animations */}
+      {/* Hero Section – home page animations (replay when scrolled back into view) */}
       <motion.section 
         className="h-screen flex items-center justify-center relative overflow-hidden"
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: false, margin: "-80px" }}
         variants={heroStagger}
       >
         {/* Background gradient animation */}
