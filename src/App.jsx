@@ -315,15 +315,15 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark to-gray-900 text-light overflow-x-hidden">
+    <div className="min-h-screen w-full max-w-full bg-gradient-to-br from-dark to-gray-900 text-light overflow-x-hidden box-border">
       {/* Navigation */}
       <motion.nav 
-        className="fixed w-full max-w-[100vw] bg-dark/90 backdrop-blur-md z-50 border-b border-gray-800"
+        className="fixed top-0 left-0 right-0 w-full max-w-full bg-dark/90 backdrop-blur-md z-50 border-b border-gray-800 box-border"
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="w-full max-w-[100vw] mx-auto px-3 sm:px-4 py-2.5 sm:py-3 box-border relative overflow-x-hidden">
+        <div className="w-full max-w-full mx-auto px-3 sm:px-4 py-2.5 sm:py-3 box-border relative overflow-x-hidden">
           <div className="flex items-center justify-between gap-2 min-w-0">
             {/* Logo and Name – compact on mobile */}
             <motion.a
@@ -440,7 +440,7 @@ const App = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="md:hidden absolute right-3 top-full mt-1 w-max min-w-40 max-w-[calc(100vw-1.5rem)] bg-dark border border-gray-700 rounded-lg shadow-xl py-2 z-[60]"
+              className="md:hidden absolute right-3 top-full mt-1 w-max min-w-40 max-w-[85%] bg-dark border border-gray-700 rounded-lg shadow-xl py-2 z-[60]"
             >
               <div className="flex flex-col">
                 {['About', 'Skills', 'Projects', 'Experience', 'Resume', 'Certifications', 'Education', 'Contact'].map((item, index) => (
