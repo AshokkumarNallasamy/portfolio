@@ -7,7 +7,7 @@ import emailjs from '@emailjs/browser';
 
 const App = () => {
   const [ref] = useInView({
-    triggerOnce: true,
+    triggerOnce: false,
     threshold: 0.1,
   });
 
@@ -78,64 +78,43 @@ const App = () => {
     }, 500);
   };
 
-  // New dynamic animation variants with spring physics
+  // Punchy but GPU-friendly: ease-based, opacity + transform only
+  const easeOutPunch = [0.22, 1, 0.36, 1]; // snappy deceleration at end
+
   const slideInFromLeft = {
-    hidden: { opacity: 0, x: -100, rotate: -10 },
-    visible: { 
-      opacity: 1, 
+    hidden: { opacity: 0, x: -56 },
+    visible: {
+      opacity: 1,
       x: 0,
-      rotate: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-        duration: 0.6
-      }
+      transition: { duration: 0.5, ease: easeOutPunch }
     }
   };
 
   const slideInFromRight = {
-    hidden: { opacity: 0, x: 100, rotate: 10 },
-    visible: { 
-      opacity: 1, 
+    hidden: { opacity: 0, x: 56 },
+    visible: {
+      opacity: 1,
       x: 0,
-      rotate: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-        duration: 0.6
-      }
+      transition: { duration: 0.5, ease: easeOutPunch }
     }
   };
 
   const slideInFromBottom = {
-    hidden: { opacity: 0, y: 50, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
+    hidden: { opacity: 0, y: 40, scale: 0.94 },
+    visible: {
+      opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 120,
-        damping: 12,
-        duration: 0.7
-      }
+      transition: { duration: 0.5, ease: easeOutPunch }
     }
   };
 
   const slideInFromTop = {
-    hidden: { opacity: 0, y: -50, scale: 0.9 },
-    visible: { 
-      opacity: 1, 
+    hidden: { opacity: 0, y: -40 },
+    visible: {
+      opacity: 1,
       y: 0,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 14,
-        duration: 0.6
-      }
+      transition: { duration: 0.45, ease: easeOutPunch }
     }
   };
 
@@ -144,137 +123,144 @@ const App = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2
+        staggerChildren: 0.09,
+        delayChildren: 0.08
       }
     }
   };
 
   const letterAnimation = {
-    hidden: { opacity: 0, y: 30, rotateX: -90 },
+    hidden: { opacity: 0, y: 22 },
     visible: {
       opacity: 1,
       y: 0,
-      rotateX: 0,
-      transition: {
-        type: "spring",
-        stiffness: 150,
-        damping: 12,
-        duration: 0.5
-      }
+      transition: { duration: 0.4, ease: easeOutPunch }
     }
   };
 
   const scaleIn = {
-    hidden: { scale: 0, opacity: 0, rotate: -180 },
+    hidden: { opacity: 0, scale: 0.88 },
     visible: {
-      scale: 1,
       opacity: 1,
-      rotate: 0,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 15,
-        duration: 0.8
-      }
+      scale: 1,
+      transition: { duration: 0.45, ease: easeOutPunch }
     }
   };
 
   const bounceIn = {
-    hidden: { opacity: 0, scale: 0.3, y: -50 },
+    hidden: { opacity: 0, y: -36, scale: 0.9 },
     visible: {
       opacity: 1,
-      scale: 1,
       y: 0,
+      scale: 1,
+      transition: { duration: 0.5, ease: easeOutPunch }
+    }
+  };
+
+  // Home / Hero – slower stagger so the sequence is visible on load
+  const heroStagger = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
       transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 8,
-        duration: 0.8
+        staggerChildren: 0.12,
+        delayChildren: 0.15
       }
     }
   };
 
-  // Enhanced hover animations - subtle and elegant
+  const heroIconReveal = {
+    hidden: { opacity: 0, scale: 0.5, y: 20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.55, ease: easeOutPunch }
+    }
+  };
+
+  const heroNameReveal = {
+    hidden: { opacity: 0, y: 32, scale: 0.96 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.5, ease: easeOutPunch }
+    }
+  };
+
+  const heroSubtitleReveal = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.45, ease: easeOutPunch }
+    }
+  };
+
+  const heroDecoReveal = {
+    hidden: { opacity: 0, x: -40 },
+    visible: {
+      opacity: 0.25,
+      x: 0,
+      transition: { duration: 0.7, ease: easeOutPunch }
+    }
+  };
+
+  const heroDecoRevealRight = {
+    hidden: { opacity: 0, x: 40 },
+    visible: {
+      opacity: 0.25,
+      x: 0,
+      transition: { duration: 0.7, ease: easeOutPunch }
+    }
+  };
+
+  // Punchy hover – still quick and cheap to render
   const enhancedHoverAnimation = {
     whileHover: {
       scale: 1.05,
-      boxShadow: "0 8px 30px rgba(0, 122, 255, 0.3)",
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 20,
-        duration: 0.3
-      }
+      transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
     },
     whileTap: {
-      scale: 0.98,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 20,
-        duration: 0.2
-      }
+      scale: 0.97,
+      transition: { duration: 0.12, ease: "easeOut" }
     }
   };
 
   const cardHoverAnimation = {
     whileHover: {
-      scale: 1.02,
-      y: -4,
-      boxShadow: "0 15px 40px rgba(0, 122, 255, 0.25)",
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 25,
-        duration: 0.3
-      }
+      y: -6,
+      transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
-  // Subtle continuous animations - elegant and minimal
+  // Light continuous motion
   const subtleFloat = {
     animate: {
-      y: [0, -8, 0],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
+      y: [0, -6, 0],
+      transition: { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
     }
   };
 
   const gentlePulse = {
     animate: {
-      opacity: [0.3, 0.5, 0.3],
-      scale: [1, 1.02, 1],
-      transition: {
-        duration: 5,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
+      opacity: [0.4, 0.7, 0.4],
+      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
     }
   };
 
   const slowRotate = {
     animate: {
       rotate: [0, 360],
-      transition: {
-        duration: 30,
-        repeat: Infinity,
-        ease: "linear"
-      }
+      transition: { duration: 40, repeat: Infinity, ease: "linear" }
     }
   };
 
   const shimmer = {
     animate: {
-      opacity: [0.2, 0.4, 0.2],
-      transition: {
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
+      opacity: [0.25, 0.45, 0.25],
+      transition: { duration: 3.5, repeat: Infinity, ease: "easeInOut" }
     }
   };
 
@@ -333,14 +319,9 @@ const App = () => {
       {/* Navigation */}
       <motion.nav 
         className="fixed w-full bg-dark/90 backdrop-blur-md z-50 border-b border-gray-800"
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ 
-          type: "spring", 
-          stiffness: 150, 
-          damping: 20,
-          duration: 0.6 
-        }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
@@ -351,27 +332,22 @@ const App = () => {
                 e.preventDefault();
                 scrollToTop();
               }}
-              initial={{ opacity: 0, x: -50, rotate: -15 }}
-              animate={{ opacity: 1, x: 0, rotate: 0 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 200,
-                damping: 15,
-                duration: 0.5
-              }}
+              initial={{ opacity: 0, x: -32 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
               <motion.div
-                animate={subtleFloat.animate}
+                // animate={subtleFloat.animate}
               >
                 <FaApple className="text-primary text-xl md:text-2xl" />
               </motion.div>
               <motion.span 
                 className="text-xl md:text-2xl font-bold text-primary"
-                animate={subtleFloat.animate}
-                transition={{
-                  delay: 0.5
-                }}
+                // animate={subtleFloat.animate}
+                // transition={{
+                //   delay: 0.5
+                // }}
               >
                 Ashokkumar
               </motion.span>
@@ -407,29 +383,14 @@ const App = () => {
                   href={`#${item.toLowerCase()}`}
                   className="hover:text-primary transition-colors relative text-sm"
                   variants={letterAnimation}
-                  whileHover={{ 
-                    y: -3,
-                    scale: 1.05,
-                    transition: {
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20
-                    }
-                  }}
-                  whileTap={{ scale: 0.9, rotate: 0 }}
+                  whileHover={{ y: -2, transition: { duration: 0.2, ease: "easeOut" } }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   {item}
                   <motion.span
                     className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"
                     initial={{ scaleX: 0, originX: 0 }}
-                    whileHover={{ 
-                      scaleX: 1,
-                      transition: {
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 20
-                      }
-                    }}
+                    whileHover={{ scaleX: 1, transition: { duration: 0.2, ease: "easeOut" } }}
                   />
                 </motion.a>
               ))}
@@ -438,30 +399,15 @@ const App = () => {
             {/* Mobile Menu Button */}
             <motion.button
               className="md:hidden relative w-8 h-8 flex items-center justify-center"
-              whileHover={{ 
-                scale: 1.2,
-                rotate: [0, -10, 10, 0],
-                transition: { 
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 10
-                }
-              }}
-              whileTap={{ scale: 0.85 }}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
               <motion.div 
                 className="relative w-5 h-4"
-                animate={{
-                  rotate: isMenuOpen ? [0, 180, 180] : [180, 0, 0]
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 15,
-                  duration: 0.5
-                }}
+                animate={{ rotate: isMenuOpen ? 180 : 0 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
               >
                 <motion.span 
                   className={`absolute top-0 left-0 w-5 h-0.5 bg-primary transform transition-all duration-300 origin-center ${
@@ -504,15 +450,10 @@ const App = () => {
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
-                initial={{ opacity: 0, y: -20, scale: 0.8, rotateX: -90 }}
-                animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-                exit={{ opacity: 0, y: -20, scale: 0.8, rotateX: -90 }}
-                transition={{ 
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 20,
-                  duration: 0.4
-                }}
+                initial={{ opacity: 0, y: -16, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -16, scale: 0.96 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 className="md:hidden absolute right-4 top-16 w-48 bg-dark/95 rounded-lg shadow-xl overflow-hidden border border-gray-800"
               >
                 <div className="flex flex-col py-2">
@@ -521,24 +462,11 @@ const App = () => {
                       <motion.a
                         href={`#${item.toLowerCase()}`}
                         className="px-4 py-2.5 text-gray-300 hover:text-primary hover:bg-primary/10 transition-colors text-sm"
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={{ opacity: 0, x: -12 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          delay: index * 0.1,
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 15
-                        }}
-                whileHover={{ 
-                  x: 5,
-                  scale: 1.03,
-                  transition: {
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 20
-                  }
-                }}
-                        whileTap={{ scale: 0.95 }}
+                        transition={{ delay: index * 0.05, duration: 0.25, ease: "easeOut" }}
+                        whileHover={{ x: 4 }}
+                        whileTap={{ scale: 0.98 }}
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {item}
@@ -559,26 +487,14 @@ const App = () => {
       <AnimatePresence>
         {showScrollTop && (
           <motion.button
-            initial={{ opacity: 0, y: 50, scale: 0, rotate: -180 }}
-            animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-            exit={{ opacity: 0, y: 50, scale: 0, rotate: 180 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 15
-            }}
+            initial={{ opacity: 0, y: 28, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 28, scale: 0.9 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             onClick={scrollToTop}
             className="fixed bottom-8 right-8 bg-dark/80 backdrop-blur-md border border-primary/30 text-primary p-4 rounded-full shadow-lg z-50 transition-all duration-300 hover:border-primary hover:bg-primary/10"
-            whileHover={{ 
-              scale: 1.15,
-              boxShadow: "0 0 25px rgba(0, 122, 255, 0.4)",
-              transition: {
-                type: "spring",
-                stiffness: 300,
-                damping: 20
-              }
-            }}
-            whileTap={{ scale: 0.9, rotate: 0 }}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
           >
             <motion.div
               animate={subtleFloat.animate}
@@ -589,63 +505,42 @@ const App = () => {
         )}
       </AnimatePresence>
 
-      {/* Hero Section */}
+      {/* Hero Section – home page animations */}
       <motion.section 
         className="h-screen flex items-center justify-center relative overflow-hidden"
         initial="hidden"
         animate="visible"
-        variants={staggerContainer}
+        variants={heroStagger}
       >
         {/* Background gradient animation */}
         <motion.div 
           className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"
-          animate={{
-            opacity: [0.5, 0.8, 0.5],
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0.4, 0.75, 0.4] }}
           transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
+            opacity: { duration: 5, repeat: Infinity, ease: "easeInOut" },
           }}
         />
 
-        {/* Subtle decorative elements */}
+        {/* Decorative icons – slide in from corners on load */}
         <motion.div
           className="absolute top-[10%] left-[5%] md:top-1/4 md:left-1/4"
+          variants={heroDecoReveal}
           animate={subtleFloat.animate}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ 
-            duration: 1,
-            delay: 0.5
-          }}
         >
           <SiSwift className="text-3xl md:text-5xl text-primary/20" />
         </motion.div>
         <motion.div
           className="absolute bottom-[10%] right-[5%] md:bottom-1/4 md:right-1/4"
+          variants={heroDecoRevealRight}
           animate={subtleFloat.animate}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ 
-            duration: 1,
-            delay: 0.8
-          }}
         >
           <SiAppstore className="text-3xl md:text-5xl text-secondary/20" />
         </motion.div>
         <motion.div
           className="absolute top-[20%] right-[5%] md:top-1/3 md:right-1/3"
+          variants={heroDecoRevealRight}
           animate={gentlePulse.animate}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ 
-            duration: 1,
-            delay: 1.1
-          }}
         >
           <FaMobile className="text-3xl md:text-5xl text-accent/20" />
         </motion.div>
@@ -678,10 +573,10 @@ const App = () => {
         <motion.div 
           style={{ opacity, scale }}
           className="text-center z-10 px-4 md:px-0 relative"
-          variants={staggerContainer}
+          variants={heroStagger}
         >
           <motion.div
-            variants={bounceIn}
+            variants={heroIconReveal}
             className="mb-6 md:mb-8"
           >
             <motion.div
@@ -693,13 +588,12 @@ const App = () => {
 
           <motion.h1 
             className="text-3xl md:text-6xl font-bold mb-4 md:mb-6"
-            variants={slideInFromBottom}
+            variants={heroNameReveal}
           >
             Ashokkumar N
             <motion.span 
               className="block text-primary mt-2"
-              variants={slideInFromBottom}
-              transition={{ delay: 0.2 }}
+              variants={heroSubtitleReveal}
             >
               iOS Developer
             </motion.span>
@@ -707,33 +601,26 @@ const App = () => {
 
           <motion.p 
             className="text-base md:text-xl mb-6 md:mb-8 text-gray-300 max-w-3xl mx-auto"
-            variants={slideInFromTop}
-            transition={{ delay: 0.3 }}
+            variants={heroSubtitleReveal}
           >
             Results-driven iOS Developer with 2+ years building scalable, high-performance apps using Swift, SwiftUI, UIKit, Combine, CoreData, REST APIs, and MVVM architecture. Proven track record of delivering App Store releases, improving stability, and collaborating across teams.
           </motion.p>
 
-          {/* Skill tags */}
+          {/* Skill tags – pop in with stagger */}
           <motion.div 
             className="flex flex-wrap justify-center gap-3 mb-6 md:mb-8"
-            variants={staggerContainer}
+            variants={heroStagger}
           >
             {['Swift', 'SwiftUI', 'UIKit', 'Combine', 'CoreData', 'MVVM'].map((skill, index) => (
               <motion.span
                 key={skill}
                 className="px-3 py-1.5 bg-primary/10 rounded-full text-primary text-sm"
                 variants={letterAnimation}
-                  whileHover={{
-                    scale: 1.08,
-                    backgroundColor: "rgba(0, 122, 255, 0.25)",
-                    boxShadow: "0 4px 15px rgba(0, 122, 255, 0.3)",
-                    transition: {
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20
-                    }
-                  }}
-                transition={{ delay: 0.1 * index }}
+                whileHover={{
+                  backgroundColor: "rgba(0, 122, 255, 0.25)",
+                  scale: 1.05,
+                  transition: { duration: 0.2, ease: "easeOut" }
+                }}
               >
                 {skill}
               </motion.span>
@@ -742,7 +629,7 @@ const App = () => {
 
           <motion.div 
             className="flex flex-col md:flex-row justify-center gap-3 md:gap-4"
-            variants={staggerContainer}
+            variants={heroStagger}
           >
             <motion.button
               {...enhancedHoverAnimation}
@@ -750,10 +637,7 @@ const App = () => {
               onClick={handleViewProjects}
               variants={slideInFromLeft}
             >
-              <motion.div
-                animate={subtleFloat.animate}
-                transition={{ delay: 0.5 }}
-              >
+              <motion.div animate={subtleFloat.animate}>
                 <FaLaptopCode />
               </motion.div>
               View Projects
@@ -764,10 +648,7 @@ const App = () => {
               onClick={handleDownloadResume}
               variants={slideInFromRight}
             >
-              <motion.div
-                animate={subtleFloat.animate}
-                transition={{ delay: 1 }}
-              >
+              <motion.div animate={subtleFloat.animate}>
                 <FaDownload />
               </motion.div>
               Download Resume
@@ -782,7 +663,7 @@ const App = () => {
         className={`${mobileStyles.section} bg-dark/50`}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }} // Reduced margin for mobile
+        viewport={{ once: false, margin: "-50px" }} // Reduced margin for mobile
         variants={staggerContainer}
       >
         <div className={`container mx-auto ${mobileStyles.container}`}>
@@ -821,7 +702,7 @@ const App = () => {
         className="py-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         variants={staggerContainer}
       >
         <div className="container mx-auto px-6">
@@ -924,7 +805,7 @@ const App = () => {
         className="py-20 bg-dark/50"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         variants={staggerContainer}
       >
         <div className="container mx-auto px-6">
@@ -1009,7 +890,7 @@ const App = () => {
         className="py-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         variants={staggerContainer}
       >
         <div className="container mx-auto px-6">
@@ -1071,7 +952,7 @@ const App = () => {
         className="py-20 bg-dark/50"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         variants={staggerContainer}
       >
         <div className="container mx-auto px-6">
@@ -1112,7 +993,7 @@ const App = () => {
         className="py-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         variants={staggerContainer}
       >
         <div className="container mx-auto px-6">
@@ -1152,7 +1033,7 @@ const App = () => {
         className="py-20 bg-dark/50"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         variants={staggerContainer}
       >
         <div className="container mx-auto px-6">
@@ -1200,7 +1081,7 @@ const App = () => {
         className={`${mobileStyles.section} bg-dark/50 min-h-screen flex items-center justify-center`}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: false, margin: "-50px" }}
         variants={staggerContainer}
       >
         <div className={`container mx-auto ${mobileStyles.container}`}>
@@ -1222,15 +1103,8 @@ const App = () => {
               <motion.a
                 href={`mailto:${EMAIL}`}
                 className="text-lg md:text-xl text-primary hover:text-secondary transition-colors"
-                whileHover={{ 
-                  scale: 1.08,
-                  transition: {
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 20
-                  }
-                }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {EMAIL}
               </motion.a>
@@ -1244,25 +1118,11 @@ const App = () => {
             {/* Social icons */}
             <div className="flex justify-center space-x-8 mb-8 md:mb-12">
               <motion.a
-                initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 15,
-                  delay: 0.1
-                }}
-                whileHover={{ 
-                  scale: 1.3,
-                  rotate: [0, -15, 15, -15, 0],
-                  y: -5,
-                  transition: { 
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 10
-                  }
-                }}
+                initial={{ opacity: 0, y: 24, scale: 0.85 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                whileHover={{ y: -5, scale: 1.1, transition: { duration: 0.2 } }}
                 href="https://github.com/AshokkumarNallasamy"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1271,25 +1131,11 @@ const App = () => {
                 <FaGithub />
               </motion.a>
               <motion.a
-                initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 15,
-                  delay: 0.2
-                }}
-                whileHover={{ 
-                  scale: 1.3,
-                  rotate: [0, -15, 15, -15, 0],
-                  y: -5,
-                  transition: { 
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 10
-                  }
-                }}
+                initial={{ opacity: 0, y: 24, scale: 0.85 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                whileHover={{ y: -5, scale: 1.1, transition: { duration: 0.2 } }}
                 href="https://www.linkedin.com/in/ashokkumar01"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1298,25 +1144,11 @@ const App = () => {
                 <FaLinkedin />
               </motion.a>
               <motion.a
-                initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 15,
-                  delay: 0.3
-                }}
-                whileHover={{ 
-                  scale: 1.3,
-                  rotate: [0, -15, 15, -15, 0],
-                  y: -5,
-                  transition: { 
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 10
-                  }
-                }}
+                initial={{ opacity: 0, y: 24, scale: 0.85 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                whileHover={{ y: -5, scale: 1.1, transition: { duration: 0.2 } }}
                 href={`https://wa.me/${9360436613}?text=${encodeURIComponent("Hey!\nAshokkumar Nallasamy.")}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1342,16 +1174,7 @@ const App = () => {
                   onChange={handleInputChange}
                   placeholder="Your Name"
                   required
-                  whileFocus={{ 
-                    scale: 1.03,
-                    rotateX: 5,
-                    boxShadow: "0 0 25px rgba(0, 122, 255, 0.3)",
-                    transition: { 
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20
-                    }
-                  }}
+                  whileFocus={{ scale: 1.01, transition: { duration: 0.2 } }}
                   className="w-full px-4 py-3 rounded-lg bg-dark/50 border border-gray-800 focus:border-primary focus:outline-none text-base md:text-lg text-white placeholder-gray-400"
                 />
               </motion.div>
@@ -1363,16 +1186,7 @@ const App = () => {
                   onChange={handleInputChange}
                   placeholder="Your Email"
                   required
-                  whileFocus={{ 
-                    scale: 1.03,
-                    rotateX: 5,
-                    boxShadow: "0 0 25px rgba(0, 122, 255, 0.3)",
-                    transition: { 
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20
-                    }
-                  }}
+                  whileFocus={{ scale: 1.01, transition: { duration: 0.2 } }}
                   className="w-full px-4 py-3 rounded-lg bg-dark/50 border border-gray-800 focus:border-primary focus:outline-none text-base md:text-lg text-white placeholder-gray-400"
                 />
               </motion.div>
@@ -1384,16 +1198,7 @@ const App = () => {
                   placeholder="Your Message"
                   required
                   rows="4"
-                  whileFocus={{ 
-                    scale: 1.03,
-                    rotateX: 5,
-                    boxShadow: "0 0 25px rgba(0, 122, 255, 0.3)",
-                    transition: { 
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20
-                    }
-                  }}
+                  whileFocus={{ scale: 1.01, transition: { duration: 0.2 } }}
                   className="w-full px-4 py-3 rounded-lg bg-dark/50 border border-gray-800 focus:border-primary focus:outline-none text-base md:text-lg text-white placeholder-gray-400 resize-none"
                 />
               </motion.div>
@@ -1419,16 +1224,8 @@ const App = () => {
                 type="submit"
                 disabled={isSubmitting}
                 variants={slideInFromBottom}
-                whileHover={{ 
-                  scale: 1.03,
-                  boxShadow: "0 8px 25px rgba(0, 122, 255, 0.3)",
-                  transition: {
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 20
-                  }
-                }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="w-full bg-primary hover:bg-secondary text-white px-6 py-3 rounded-lg text-base md:text-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
@@ -1443,7 +1240,7 @@ const App = () => {
         className="py-8 bg-dark"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         variants={staggerContainer}
       >
         <div className="container mx-auto px-6 text-center text-gray-400">
@@ -1472,22 +1269,8 @@ const App = () => {
       {/* Add a subtle background animation */}
       <motion.div 
         className="fixed inset-0 bg-gradient-to-br from-dark to-gray-900"
-        animate={{
-          background: [
-            "linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 50%, #1C1C1E 100%)",
-            "linear-gradient(225deg, #1C1C1E 0%, #3C3C3E 50%, #2C2C2E 100%)",
-            "linear-gradient(315deg, #2C2C2E 0%, #1C1C1E 50%, #3C3C3E 100%)",
-            "linear-gradient(45deg, #3C3C3E 0%, #2C2C2E 50%, #1C1C1E 100%)",
-            "linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 50%, #1C1C1E 100%)"
-          ],
-          scale: [1, 1.05, 1.1, 1.05, 1]
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut",
-          repeatType: "loop"
-        }}
+        animate={{ opacity: [0.98, 1, 0.98] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         style={{ zIndex: -1 }}
       />
     </div>
