@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaApple, FaArrowUp } from 'react-icons/fa';
-import { springGentle, springSnappy, staggerContainer, letterAnimation, slideInFromLeft } from '../constants';
+import { FaApple } from 'react-icons/fa';
+import { springGentle, staggerContainer, letterAnimation, slideInFromLeft } from '../constants';
 import { navigationLinks } from '../data/portfolioData';
 
-const Navbar = ({ isMenuOpen, toggleMenu, closeMenu, activeSection, scrollToTop }) => {
+const Navbar = ({ isMenuOpen, toggleMenu, closeMenu, activeSection, scrollToTop, scrollToSection }) => {
   return (
     <>
       <motion.nav
@@ -26,7 +26,7 @@ const Navbar = ({ isMenuOpen, toggleMenu, closeMenu, activeSection, scrollToTop 
               <FaApple className="text-xl md:text-2xl" />
               <span className="text-lg md:text-xl font-bold tracking-tight text-white">Ashokkumar</span>
             </motion.a>
- 
+
             <motion.div
               className="hidden md:flex items-center space-x-2 lg:space-x-4 flex-shrink-0 text-gray-200"
               variants={staggerContainer}
@@ -39,6 +39,10 @@ const Navbar = ({ isMenuOpen, toggleMenu, closeMenu, activeSection, scrollToTop 
                   <motion.a
                     key={item.id}
                     href={`#${item.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(item.id);
+                    }}
                     className={`${isActive ? 'text-primary' : 'text-white/80'} hover:text-primary transition-colors relative text-xs lg:text-sm whitespace-nowrap font-semibold px-2 lg:px-3 py-2 rounded-full`}
                     variants={letterAnimation}
                     whileHover={{ y: -1, transition: { duration: 0.2 } }}
@@ -117,7 +121,11 @@ const Navbar = ({ isMenuOpen, toggleMenu, closeMenu, activeSection, scrollToTop 
                     className={`text-4xl font-bold transition-colors tracking-tighter ${isActive ? 'text-primary' : 'text-vibrant hover:text-primary'}`}
                     variants={slideInFromLeft}
                     whileTap={{ scale: 0.95 }}
-                    onClick={closeMenu}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(item.id);
+                      closeMenu();
+                    }}
                   >
                     {item.name}
                   </motion.a>

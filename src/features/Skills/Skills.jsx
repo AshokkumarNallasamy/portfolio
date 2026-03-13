@@ -2,13 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Section from '../../components/Section';
 import Card from '../../components/Card';
-import skillsBg from '../../assets/bg/skills_bg.png';
 import { bounceIn, slideInFromLeft, slideInFromRight, slideInFromBottom, iosStyles } from '../../constants';
 import { skillsData } from '../../data/portfolioData';
 
 const Skills = ({ activeSection }) => {
   return (
-    <Section id="skills" className="scroll-mt-20 md:scroll-mt-0" bgImage={skillsBg}>
+    <Section id="skills">
       <motion.h2
         className={`${iosStyles.heading + " text-center"} ${activeSection === 'skills' ? 'scale-105' : 'scale-100 opacity-90'}`}
         variants={bounceIn}

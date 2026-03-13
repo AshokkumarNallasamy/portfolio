@@ -2,13 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Section from '../../components/Section';
 import Card from '../../components/Card';
-import experienceBg from '../../assets/bg/experience_bg.png';
 import { bounceIn, slideInFromBottom, iosStyles } from '../../constants';
 import { experienceData } from '../../data/portfolioData';
 
 const Experience = ({ activeSection }) => {
   return (
-    <Section id="experience" className="scroll-mt-20 md:scroll-mt-0" bgImage={experienceBg}>
+    <Section id="experience">
       <motion.h2
         className={`${iosStyles.heading + " text-center"} ${activeSection === 'experience' ? 'scale-105' : 'scale-100 opacity-90'}`}
         variants={bounceIn}

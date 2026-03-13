@@ -6,7 +6,7 @@ import { slideInFromBottom, iosStyles } from '../../constants';
 
 const Resume = ({ activeSection, onDownload }) => {
   return (
-    <Section id="resume" className="scroll-mt-20 md:scroll-mt-0" bgImage={aboutBg}>
+    <Section id="resume" bgImage={aboutBg}>
       <div className="max-w-2xl mx-auto text-center">
         <motion.h2
           className={`${iosStyles.heading} ${activeSection === 'resume' ? 'scale-105' : 'scale-100 opacity-90'}`}

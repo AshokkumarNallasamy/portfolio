@@ -55,7 +55,7 @@ export const staggerContainer = {
 };
 
 export const letterAnimation = {
-  hidden: { opacity: 0, y: 15 },
+  hidden: { opacity: 0, y: -20 },
   visible: {
     opacity: 1,
     y: 0,
@@ -93,7 +93,7 @@ export const heroStagger = {
 };
 
 export const heroIconReveal = {
-  hidden: { opacity: 0, scale: 0.8, y: 20 },
+  hidden: { opacity: 0, scale: 0.8, y: -30 },
   visible: {
     opacity: 1,
     scale: 1,
@@ -103,7 +103,7 @@ export const heroIconReveal = {
 };
 
 export const heroNameReveal = {
-  hidden: { opacity: 0, y: 32, scale: 0.96 },
+  hidden: { opacity: 0, y: -40, scale: 0.96 },
   visible: {
     opacity: 1,
     y: 0,
@@ -113,7 +113,7 @@ export const heroNameReveal = {
 };
 
 export const heroSubtitleReveal = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: -30 },
   visible: {
     opacity: 1,
     y: 0,
@@ -122,19 +122,19 @@ export const heroSubtitleReveal = {
 };
 
 export const heroDecoReveal = {
-  hidden: { opacity: 0, x: -40 },
+  hidden: { opacity: 0, y: -40 },
   visible: {
     opacity: 0.25,
-    x: 0,
+    y: 0,
     transition: springGentle
   }
 };
 
 export const heroDecoRevealRight = {
-  hidden: { opacity: 0, x: 40 },
+  hidden: { opacity: 0, y: -40 },
   visible: {
     opacity: 0.25,
-    x: 0,
+    y: 0,
     transition: springGentle
   }
 };
@@ -172,10 +172,10 @@ export const gentlePulse = {
 };
 
 export const iosStyles = {
-  section: "min-h-[60vh] py-20 md:py-0 md:min-h-screen flex flex-col justify-center",
-  heading: "text-3xl md:text-6xl text-vibrant font-bold tracking-tight mb-8 md:mb-12 transition-all duration-700",
-  subheading: "text-xl md:text-3xl font-bold mb-4 md:mb-6 text-vibrant",
+  section: "min-h-[60vh] pt-16 pb-24 md:pt-[15vh] md:pb-[25vh] md:min-h-screen flex flex-col justify-start md:justify-center scroll-mt-24",
+  heading: "text-2xl sm:text-3xl md:text-6xl text-vibrant font-bold tracking-tight mb-6 md:mb-12 transition-all duration-700",
+  subheading: "text-lg sm:text-xl md:text-3xl font-bold mb-3 md:mb-6 text-vibrant",
   container: "ios-container",
-  card: "ios-glass p-8 rounded-[2rem] border border-white/10 hover:border-white/20 transition-all duration-500 h-full flex flex-col",
-  form: "w-full max-w-2xl mx-auto ios-glass p-6 md:p-8 rounded-3xl",
+  card: "ios-glass p-5 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10 hover:border-white/20 transition-all duration-500 h-full flex flex-col",
+  form: "w-full max-w-2xl mx-auto ios-glass p-5 sm:p-6 md:p-8 rounded-3xl",
 };

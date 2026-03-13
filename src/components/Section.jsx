@@ -12,21 +12,6 @@ const Section = ({ id, children, bgImage, className = "", initial = "hidden", wh
       viewport={viewport}
       variants={variants}
     >
-      {bgImage && (
-        <motion.div 
-          className="absolute inset-0 z-0 pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: bgStyle.opacity || 0.7 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          style={{
-            backgroundImage: `url(${bgImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'blur(5px) brightness(0.9)',
-            ...bgStyle
-          }}
-        />
-      )}
       <div className={`${iosStyles.container} relative z-10`}>
         {children}
       </div>

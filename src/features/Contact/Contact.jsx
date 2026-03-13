@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import Section from '../../components/Section';
 import {
   bounceIn,
@@ -21,7 +20,7 @@ const Contact = ({ activeSection }) => {
   return (
     <Section 
       id="contact" 
-      className="scroll-mt-20 md:scroll-mt-0" 
+      className="" 
       bgImage={contactBg}
       bgStyle={{ filter: 'blur(15px) brightness(0.7)', opacity: 0.5 }}
     >

@@ -2,13 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Section from '../../components/Section';
 import Card from '../../components/Card';
-import projectsBg from '../../assets/bg/projects_bg.png';
 import { bounceIn, slideInFromLeft, slideInFromRight, iosStyles } from '../../constants';
 import { educationData } from '../../data/portfolioData';
 
 const Education = ({ activeSection }) => {
   return (
-    <Section id="education" className="scroll-mt-20 md:scroll-mt-0" bgImage={projectsBg}>
+    <Section id="education">
       <motion.h2
         className={`${iosStyles.heading + " text-center"} ${activeSection === 'education' ? 'scale-105' : 'scale-100 opacity-90'}`}
         variants={bounceIn}

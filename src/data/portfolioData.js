@@ -1,5 +1,5 @@
-import { FaApple, FaLaptopCode, FaDownload, FaMobile, FaGithub, FaLinkedin, FaWhatsapp, FaSwift } from 'react-icons/fa';
-import { SiXcode, SiFirebase, SiSwift, SiAppstore } from 'react-icons/si';
+import { FaApple, FaGithub, FaLinkedin, FaWhatsapp, FaSwift } from 'react-icons/fa';
+import { SiXcode, SiFirebase } from 'react-icons/si';
 
 export const skillsData = [
   {
@@ -137,7 +137,7 @@ export const navigationLinks = [
   { name: 'Skills', id: 'skills' },
   { name: 'Projects', id: 'projects' },
   { name: 'Experience', id: 'experience' },
-  { name: 'Resume', id: 'resume' },
+  // { name: 'Resume', id: 'resume' },
   { name: 'Certifications', id: 'certifications' },
   { name: 'Education', id: 'education' },
   { name: 'Contact', id: 'contact' }

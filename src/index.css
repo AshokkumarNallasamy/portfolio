@@ -80,8 +80,8 @@
 @layer components {
   .ios-glass {
     background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(25px) saturate(180%) brightness(1.05);
-    -webkit-backdrop-filter: blur(25px) saturate(180%) brightness(1.1);
+    backdrop-filter: blur(12px) saturate(180%) brightness(1.05);
+    -webkit-backdrop-filter: blur(12px) saturate(180%) brightness(1.1);
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow:
       inset 0 0.5px 1px rgba(255, 255, 255, 0.1),
@@ -91,8 +91,8 @@
 
   .ios-glass-vibrant {
     background: rgba(20, 20, 22, 0.4);
-    backdrop-filter: blur(30px) saturate(180%) brightness(1.1);
-    -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(1.1);
+    backdrop-filter: blur(16px) saturate(180%) brightness(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(180%) brightness(1.1);
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow:
       inset 0 0.5px 1px rgba(255, 255, 255, 0.2),
@@ -100,7 +100,7 @@
   }
 
   .ios-container {
-    @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-12;
+    @apply max-w-7xl mx-auto px-5 sm:px-8 lg:px-12;
   }
 
   /* Glassy Text Utility */
@@ -167,4 +167,19 @@
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+}
+
+/* Mobile-safe fixed background (iOS Safari fallback) */
+@supports (-webkit-touch-callout: none) {
+  .fixed.inset-0[style*="backgroundAttachment"] {
+    background-attachment: scroll !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Ensure fixed background doesn't break on mobile */
+  .fixed.inset-0 {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
 }

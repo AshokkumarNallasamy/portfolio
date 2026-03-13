@@ -1,13 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Section from '../../components/Section';
-import projectsBg from '../../assets/bg/projects_bg.png';
 import { bounceIn, slideInFromLeft, slideInFromRight, iosStyles } from '../../constants';
 import { projectsData } from '../../data/portfolioData';
 
 const Projects = ({ activeSection }) => {
   return (
-    <Section id="projects" className="scroll-mt-20 md:scroll-mt-0" bgImage={projectsBg}>
+    <Section id="projects">
       <motion.h2
         className={`${iosStyles.heading + " text-center"} ${activeSection === 'projects' ? 'scale-105' : 'scale-100 opacity-90'}`}
         variants={bounceIn}
@@ -24,7 +23,7 @@ const Projects = ({ activeSection }) => {
               variants={variants}
               whileHover={{ y: -6, transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] } }}
               onClick={() => project.link && window.open(project.link, '_blank')}
-              className={project.link ? "cursor-pointer h-full" : "h-full"}
+              className={`${project.link ? "cursor-pointer h-full" : "h-full"} will-change-transform`}
             >
               <div className={iosStyles.card + " !p-0"}>
                 <div className={`${project.bgColor} h-64 flex items-center justify-center border-b border-white/10 blur-[0.3px]`}>
